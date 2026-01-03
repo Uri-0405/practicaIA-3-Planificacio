@@ -1,0 +1,60 @@
+
+ff: parsing domain file
+domain 'HOTEL-EXT4' defined
+ ... done.
+ff: parsing problem file
+problem 'AUTO-EXT4' defined
+ ... done.
+
+
+translating negated cond for predicate DECIDED
+translating negated cond for predicate WITHIN
+translating negated cond for predicate USED
+
+ff: search configuration is Enforced Hill-Climbing, then A*epsilon with weight 5.
+Metric is ((1000000.00*[RF2](N-SKIPPED)1000.00*[RF1](N-USED)1.00*[RF0](WASTE)) - () + 0.00)
+COST MINIMIZATION DONE (WITH cost-minimizing relaxed plans).
+
+Cueing down from goal distance:   15 into depth [1]
+                                  14            [1]
+                                  13            [1]
+                                  12            [1]
+                                  11            [1]
+                                  10            [1]
+                                   9            [1]
+                                   8            [1]
+                                   7            [1]
+                                   6            [1]
+                                   5            [1]
+                                   4            [1]
+                                   3            [1]
+                                   2            [1]
+                                   1            [1]
+                                   0            
+
+ff: found legal plan as follows
+step    0: SKIP R15
+        1: ASSIGN-ROOM-NEW R14 RM6
+        2: ASSIGN-ROOM-EXISTING R13 RM6
+        3: ASSIGN-ROOM-NEW R12 RM5
+        4: ASSIGN-ROOM-EXISTING R11 RM6
+        5: ASSIGN-ROOM-EXISTING R10 RM6
+        6: ASSIGN-ROOM-NEW R9 RM4
+        7: ASSIGN-ROOM-EXISTING R8 RM4
+        8: ASSIGN-ROOM-EXISTING R7 RM5
+        9: ASSIGN-ROOM-EXISTING R6 RM4
+       10: SKIP R5
+       11: SKIP R4
+       12: SKIP R3
+       13: ASSIGN-ROOM-NEW R2 RM3
+       14: SKIP R1
+plan cost: 5004005.000000
+
+time spent:    0.00 seconds instantiating 15 easy, 80 hard action templates
+               0.00 seconds reachability analysis, yielding 290 facts and 95 actions
+               0.00 seconds creating final representation with 203 relevant facts, 3 relevant fluents
+               0.00 seconds computing LNF
+               0.00 seconds building connectivity graph
+               0.00 seconds searching, evaluating 16 states, to a max depth of 1
+               0.00 seconds total time
+

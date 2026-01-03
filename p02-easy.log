@@ -1,0 +1,46 @@
+
+ff: parsing domain file
+domain 'HOTEL-EXT4' defined
+ ... done.
+ff: parsing problem file
+problem 'AUTO-EXT4' defined
+ ... done.
+
+
+translating negated cond for predicate DECIDED
+translating negated cond for predicate WITHIN
+translating negated cond for predicate USED
+
+ff: search configuration is Enforced Hill-Climbing, then A*epsilon with weight 5.
+Metric is ((1000000.00*[RF2](N-SKIPPED)1000.00*[RF1](N-USED)1.00*[RF0](WASTE)) - () + 0.00)
+COST MINIMIZATION DONE (WITH cost-minimizing relaxed plans).
+
+Cueing down from goal distance:    8 into depth [1]
+                                   7            [1]
+                                   6            [1]
+                                   5            [1]
+                                   4            [1]
+                                   3            [1]
+                                   2            [1]
+                                   1            [1]
+                                   0            
+
+ff: found legal plan as follows
+step    0: ASSIGN-ROOM-NEW R8 RM3
+        1: ASSIGN-ROOM-EXISTING R7 RM3
+        2: ASSIGN-ROOM-NEW R6 RM4
+        3: SKIP R5
+        4: ASSIGN-ROOM-EXISTING R4 RM4
+        5: ASSIGN-ROOM-EXISTING R3 RM3
+        6: SKIP R2
+        7: SKIP R1
+plan cost: 3002002.000000
+
+time spent:    0.00 seconds instantiating 8 easy, 26 hard action templates
+               0.00 seconds reachability analysis, yielding 170 facts and 34 actions
+               0.00 seconds creating final representation with 93 relevant facts, 3 relevant fluents
+               0.00 seconds computing LNF
+               0.00 seconds building connectivity graph
+               0.00 seconds searching, evaluating 9 states, to a max depth of 1
+               0.00 seconds total time
+
