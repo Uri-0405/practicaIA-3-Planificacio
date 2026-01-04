@@ -14,7 +14,17 @@ run_test() {
     
     # Comanda d'exemple per Metric-FF (ajusta segons el teu planificador)
     # -O: optimització, -o: domini, -f: problema
+    # Utilitzem date +%s%N per obtenir precisió de nanosegons
+    start_time=$(date +%s%N)
     $PLANNER -o $DOMAIN -f $PROBLEM > "${PROBLEM%.pddl}.log"
+    end_time=$(date +%s%N)
+    
+    # Calcular durada en segons amb decimals
+    duration_ns=$((end_time - start_time))
+    # Convertir a segons (flotant)
+    duration_sec=$(awk "BEGIN {printf \"%.6f\", $duration_ns/1000000000}")
+    
+    echo "External Total Time: $duration_sec seconds" >> "${PROBLEM%.pddl}.log"
     
     # Comprovar si s'ha trobat solució (això depèn de la sortida del planificador)
     if grep -q "found legal plan" "${PROBLEM%.pddl}.log"; then
@@ -41,9 +51,19 @@ if ! command -v $PLANNER &> /dev/null; then
     exit 1
 fi
 
-run_test "p01-ext4.pddl"
-run_test "p02-easy.pddl"
-run_test "p03-medium.pddl"
-run_test "p04-hard-reduced.pddl"
+# Iterar sobre tots els fitxers .pddl excepte el domini
+for PROBLEM in *.pddl; do
+    # Saltar el fitxer de domini
+    if [ "$PROBLEM" == "$DOMAIN" ]; then
+        continue
+    fi
+    
+    # Saltar fitxers de test temporals si n'hi ha
+    if [[ "$PROBLEM" == test_* ]]; then
+        continue
+    fi
+
+    run_test "$PROBLEM"
+done
 
 echo "Proves finalitzades."

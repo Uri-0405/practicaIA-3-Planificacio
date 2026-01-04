@@ -12,9 +12,17 @@ def parse_log(log_file):
     cost = "N/A"
     
     # Extreure informació típica de Metric-FF
-    # Temps: "0.00 seconds total time"
-    t_match = re.search(r'([\d\.]+)\s+seconds total time', content)
-    if t_match: time = t_match.group(1)
+    # Temps: "0.00 seconds total time" - convertir a mil·lisegons
+    # Primer intentem buscar el temps extern (més precís)
+    t_match_ext = re.search(r'External Total Time:\s+([\d\.]+)\s+seconds', content)
+    t_match_int = re.search(r'([\d\.]+)\s+seconds total time', content)
+    
+    if t_match_ext:
+        time_s = float(t_match_ext.group(1))
+        time = f"{time_s * 1000:.3f}"
+    elif t_match_int: 
+        time_s = float(t_match_int.group(1))
+        time = f"{time_s * 1000:.3f}"
     
     # Longitud: "step    8: assign r2 rm2"
     if "found legal plan" in content:
@@ -47,7 +55,7 @@ def parse_log(log_file):
     return time, length, cost, skipped, used, waste
 
 def main():
-    print("| Problema | Temps (s) | Longitud Pla | Cost Total | Skipped | Habitacions Usades | Waste Total |")
+    print("| Problema | Temps (ms) | Longitud Pla | Cost Total | Skipped | Habitacions Usades | Waste Total |")
     print("| :--- | :---: | :---: | :---: | :---: | :---: | :---: |")
     
     log_files = sorted(glob.glob("*.log"))
@@ -56,6 +64,10 @@ def main():
         return
 
     for log in log_files:
+        # Saltar problemes hard-reduced
+        if "hard-reduced" in log:
+            continue
+        
         prob_name = log.replace(".log", "")
         time, length, cost, skipped, used, waste = parse_log(log)
         print(f"| {prob_name} | {time} | {length} | {cost} | {skipped} | {used} | {waste} |")

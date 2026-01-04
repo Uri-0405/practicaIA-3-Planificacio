@@ -91,10 +91,26 @@ def main():
     ap.add_argument("--max-stay", type=int, default=7, help="Maximum length of stay (days)")
     ap.add_argument("--ensure-feasible", action="store_true",
                     help="Bias pax to existing room capacities to reduce impossible reservations")
+    ap.add_argument("--level", choices=["easy", "medium", "hard"], help="Preset difficulty level (overrides rooms/res)")
+    
     args = ap.parse_args()
 
+    # Presets de dificultat
+    if args.level == "easy":
+        args.rooms = 4
+        args.res = 8
+        if args.out == "auto_ext4.pddl": args.out = "gen-easy.pddl"
+    elif args.level == "medium":
+        args.rooms = 6
+        args.res = 15
+        if args.out == "auto_ext4.pddl": args.out = "gen-medium.pddl"
+    elif args.level == "hard":
+        args.rooms = 10
+        args.res = 30
+        if args.out == "auto_ext4.pddl": args.out = "gen-hard.pddl"
+
     gen_ext4_problem(args.out, args.rooms, args.res, args.seed, args.max_stay, args.ensure_feasible)
-    print(f"Generated: {args.out}")
+    print(f"Generated: {args.out} (Rooms: {args.rooms}, Res: {args.res})")
 
 if __name__ == "__main__":
     main()
